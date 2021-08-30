@@ -54,4 +54,4 @@ mvn-deploy:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 ```
 
-[Lab6](../lab5/README.md)
+[Lab5](../lab5/README.md)

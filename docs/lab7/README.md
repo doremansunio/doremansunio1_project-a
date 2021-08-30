@@ -162,4 +162,4 @@ Spring Petclinic の Web UI を表示できることを確認します。（Revi
 1. main ブランチでも同様なアプリケーションのデプロイジョブが開始することを確認します。
 
 # ハンズオンの解答
-* [Lab8 解答](../lab7/SOLUTION.md)
+* [Lab7 解答](../lab7/SOLUTION.md)

@@ -484,4 +484,4 @@ release:
 </project>
 ```
 
-[Lab7](../lab5/README.md)
+[Lab6](../lab6/README.md)

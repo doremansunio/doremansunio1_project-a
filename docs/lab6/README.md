@@ -46,7 +46,7 @@ include:
 
 
 # ハンズオンの解答
-* [Lab7 解答](../lab6/SOLUTION.md)
+* [Lab6 解答](../lab6/SOLUTION.md)
 
 
 

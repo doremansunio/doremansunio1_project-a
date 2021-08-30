@@ -76,7 +76,7 @@ stages:
 
 
 # ハンズオンの解答
-* [Lab5 解答](../lab4/SOLUTION.md)
+* [Lab4 解答](../lab4/SOLUTION.md)
 
 
 

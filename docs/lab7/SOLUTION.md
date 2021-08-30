@@ -165,4 +165,4 @@ EXPOSE $PORT
 CMD java -jar /usr/src/app/*.jar --server.port=$PORT
 ```
 
-[Lab9](../lab8/README.md)
+[Lab8](../lab8/README.md)

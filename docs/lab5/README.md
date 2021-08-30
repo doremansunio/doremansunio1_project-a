@@ -131,7 +131,7 @@ stages:
     * Tag名
 
 # ハンズオンの解答
-* [Lab6 解答](../lab5/SOLUTION.md)
+* [Lab5 解答](../lab5/SOLUTION.md)
 
 
 

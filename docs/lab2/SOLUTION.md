@@ -15,7 +15,7 @@ download-m2cache:
   image: alpine:3.14.1
   script:
     - apk --no-cache add curl
-    - curl -L -o m2.zip https://workshop.gitlabtraining.cloud/api/v4/projects/688/jobs/artifacts/main/download?job=mvn%20package
+    - curl -L -o m2.zip "https://workshop.gitlabtraining.cloud/api/v4/projects/sample-project-templates%2flocal-cache-for-basic-cicd-workshop/jobs/artifacts/main/download?job=mvn-package"
     - if [ -e ./m2.zip ]; then unzip m2.zip; fi
   artifacts:
     paths:

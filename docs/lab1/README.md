@@ -12,29 +12,37 @@
 
 * GitLab では必然的に [Pipeline as code](https://about.gitlab.com/topics/ci-cd/pipeline-as-code/) の方式でパイプラインを構成し、パイプラインに関するバージョン管理、監査証跡、コラボレーションの容易さ、知識共有の利点を享受できます。
 
-
-
 ## ハンズオンの課題
+### 完成予定のパイプライン
+```mermaid
+graph LR
+    subgraph "Build"
+        pre-build[Stage]
+        mvn-package(mvn-package job) 
+    end
+```
+
+
 ### 操作の流れ
 ```mermaid
 graph TB
     subgraph "計画"
         イシューボードの確認 --> イシュー作成
     end
-        subgraph "マージリクエスト"
-            subgraph "同時に作成"
-                イシュー作成 --> マージリクエスト作成
-                イシュー作成 --> フィーチャブランチ作成
-            end
-            マージリクエスト作成 --> .gitlab-ci.ymlの修正
-            フィーチャブランチ作成 --> .gitlab-ci.ymlの修正
-            .gitlab-ci.ymlの修正 --> フィーチャブランチのパイプライン確認
-            フィーチャブランチのパイプライン確認 --> ソースコードレビュー
-            ソースコードレビュー --> 承認
-            承認 --> Mark_as_Ready[Mark as Ready]
-            Mark_as_Ready --> マージ
-            マージ --> mainブランチのパイプライン確認
+    subgraph "マージリクエスト"
+        subgraph "同時に作成"
+            イシュー作成 --> マージリクエスト作成
+            イシュー作成 --> フィーチャブランチ作成
         end
+        マージリクエスト作成 --> .gitlab-ci.ymlの修正
+        フィーチャブランチ作成 --> .gitlab-ci.ymlの修正
+        .gitlab-ci.ymlの修正 --> フィーチャブランチのパイプライン確認
+        フィーチャブランチのパイプライン確認 --> ソースコードレビュー
+        ソースコードレビュー --> 承認
+        承認 --> Mark_as_Ready[Mark as Ready]
+        Mark_as_Ready --> マージ
+        マージ --> mainブランチのパイプライン確認
+    end
     mainブランチのパイプライン確認 --> マージ結果の確認
 ```
 ### イシューとマージリクエストの作成

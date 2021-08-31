@@ -10,6 +10,48 @@
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Feature Branches (Merge Requests)
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |needs:, Artifacts|unit-test(unit-test job)
+    end
+```
+
+* In Default Branch
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+    subgraph "Post build"
+        test[Stage] --> post-build[Stage]
+        mvn-deploy(mvn-deploy job) 
+    end
+```
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Deploy jar only in main branch” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。

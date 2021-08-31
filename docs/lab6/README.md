@@ -9,6 +9,26 @@
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Feature Branches (Merge Requests)
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job)
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+        security-test-jobs((security test jobs))
+    end
+```
+
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Add quality and security test"” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。

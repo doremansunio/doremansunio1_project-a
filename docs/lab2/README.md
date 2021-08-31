@@ -8,6 +8,20 @@
 * 前 Lab で時間のかかったビルドジョブの実行時間の短縮を行います。後続する Lab のパイプライン実行時間も改善できます。
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+```
+
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Add download cache job” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。

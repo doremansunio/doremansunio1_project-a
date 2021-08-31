@@ -9,6 +9,36 @@
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Default Branch
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage] 
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job)
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+        security-test-jobs((security test jobs))
+    end
+    subgraph "Post build"
+        test[Stage] --> post-build[Stage]
+        mvn-package(mvn-package job) -.-> |Artifacts|post-build[Stage]
+        mvn-deploy(mvn-deploy job)
+        docker-build(docker-build job)
+    end
+    subgraph "Deploy"
+        post-build[Stage] --> deploy-stage[Stage]
+        deploy-job(deploy job)
+    end
+```
+
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Add deploy job” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。

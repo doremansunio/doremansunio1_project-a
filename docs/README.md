@@ -72,6 +72,20 @@ GitLab Training Cloud 用アカウントの作成で追加したブックマー�
 |[Lab7](./lab7)|Web アプリケーションのデプロイ|約15分|[解答](./lab7/SOLUTION.md)|
 |[Lab8](./lab8)|もっと時間が余った方へのおまけ|不明|なし|
 
+# GitLab パイプラインエディタの活用
+[パイプラインエディタ](https://docs.gitlab.com/ee/ci/pipeline_editor/) では、`.gitlab-ci.yml` の構文やLintチェック、生成パイプラインのプレビュー、インクルードした外部 CI テンプレートを展開した結果を確認することができます。`.gitlab-ci.yml` で発生した構文エラーの原因を探るのに役に立ちます。
+
+構文エラーの原因第一位は微妙なインデントのずれです。YAML ファイルはインデントに厳密であるため、注意しましょう。以下のようなインデントのずれは NG です。
+```yaml
+test-job:
+  stage: test
+   image: python:latest
+  script:
+```
+
+プロジェクトの左側のメニューより、[CI/CD] > [Editor] をクリックし、ページ上部のプルダウンメニューで編集、検証対象のブランチを選択します。
+
+
 # [GitLab Training Cloud](https://workshop.gitlabtraning.cloud) 環境情報
 
 ## GitLab バージョン

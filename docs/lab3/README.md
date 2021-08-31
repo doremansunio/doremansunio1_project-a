@@ -78,7 +78,7 @@ graph LR
   1. [レポート全体を見る] ボタンをクリックし、パイプラインとしてのテスト結果の概要を確認します。ここでスキップされたテストが１件存在すること、テストコード実行時間は５秒前後であることが確認できます。
 * アーティファクトのダウンロードをします。 
   1. パイプラインのページ中央のマージリクエストのリンク [!3 Draft: Resolve "Add unit test job"] から、マージリクエストのページに戻ります。
-  2. ３つの緑のパイプライン成功アイコンの、右のダウンロードアイコンから [Download unit-test:junit artifact] （`artifacts:reports:junit`により生成）を選択し、`junit.xml.gz` をダウンロードします。gzファイルが解凍できる環境であれば解凍し、`junit.xml` の内容を確認します。
+  2. ３つの緑のパイプライン成功アイコンの、右のダウンロードアイコンから [Download unit-test:junit artifact] （`artifacts:reports:junit`により生成）を選択し、`junit.xml.gz` をダウンロードします。gz ファイルが解凍できる環境であれば解凍し、`junit.xml` の内容を確認します。
       * gzファイルがすぐに解凍できない場合は、代わりに [Download unit-test:archive artifact] （`artifacts:paths` により生成）から `artifacts.zip` をダウンロードしましょう。
 * キーワード `needs` によるジョブの依存関係を確認します。
   1. マージリクエストのページで、[#] から始まるパイプラインのIDをクリックし、パイプラインの詳細を確認します。

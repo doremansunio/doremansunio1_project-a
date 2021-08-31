@@ -82,6 +82,9 @@ graph LR
       * Maven Deploy のエラーを回避するため、`pom.xml` の234行目付近に `<useNativeGit>true</useNativeGit>` を追加しています。
       * GitLab パッケージレジストリを Maven のリモートリポジトリとして登録するために、Maven リポジトリの設定について、以下のように設定を追記します。298、305行目に、`<repository>` と  `<distributionManagement>` の設定を追加しています。（[Project-level Maven endpoint](https://docs.gitlab.com/ee/user/packages/maven_repository/#project-level-maven-endpoint)）
 
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/jobs/job_control.html#rules-examples
+
 ### ステージの追加
 テスト済みのソースコードのみをリモートリポジトリへ登録するようにするため、ステージ `test` の後にジョブ `mvn-deploy` が実行されるようにします。
 1. `stages` の定義が以下になるように、`post build` というステージを `test` の後に追加します。

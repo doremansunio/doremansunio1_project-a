@@ -106,6 +106,9 @@ graph LR
           - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' # この行を修正
       ```
 
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/jobs/job_control.html#rules-examples
+
 ### release のジョブの追加
 `.gitlab-ci.yml` に ジョブ `release` を追加します。
 
@@ -137,6 +140,8 @@ graph LR
     rules:
       - if: <Code here>
   ```
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/yaml/index.html#complete-example-for-release
 
 ### ステージの追加
 Maven のリモートリポジトリに jar ファイルを登録した後に、リリースのジョブが実行されるようにします。

@@ -124,6 +124,12 @@ graph LR
         - if: $CI_COMMIT_BRANCH
           when: manual
     ```
+
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/review_apps/
+* https://docs.gitlab.com/ee/ci/environments/
+* https://docs.gitlab.com/ee/topics/autodevops/stages.html#auto-deploy
+
 ### mvn-package のジョブのアーティファクトの保存
 jar ファイルを後のステージに受け渡すことにより、ジョブ `docker-build` でビルドする Docker イメージの中に jar ファイルを含めます。
 1. ジョブ `mvn-package` を以下のように修正します。

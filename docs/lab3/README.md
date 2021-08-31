@@ -65,6 +65,11 @@ graph LR
         * オリジナルの XML ファイルもダウンロードできるようにするため、**通常の**アーティファクトを `artifacts:paths` により設定してします。
           * さらに `artifacts` に `when: always` を設定することで、テストが失敗した場合も通常のアーティファクトがダウンロードできるようにしています。
 
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/unit_test_reports.html
+* https://docs.gitlab.com/ee/ci/yaml/#artifacts
+* https://docs.gitlab.com/ee/ci/yaml/#needs
+
 ### ステージの追加
 ジョブの追加のともない、対応するステージも定義します。 
 1. `test` というステージを `stages` の配列として `build` の後に追加します。

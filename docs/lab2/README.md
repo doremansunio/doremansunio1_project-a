@@ -55,6 +55,9 @@ graph LR
         * 本来は、キャッシュ的な用途なので適切なスコープを設定したキーワード `cache` を活用するべきですが、本ワークショップ環境では GitLab Runner をまたいだキャッシュが動作しないため、アーティファクトで代用しています。
         * なるべく高速に動作させるために、軽量な Alpine Linux の Docker イメージを指定しています。
 
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/yaml/#needs
+
 ### ステージの追加
 ジョブの追加のともない、対応するステージも定義します。 
 1. `pre build` というステージを `stages` の配列として `build` の前に追加します。

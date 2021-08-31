@@ -87,6 +87,10 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
         script:
             - <Code here>
         ```
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html#basic-pipelines
+* https://docs.gitlab.com/ee/ci/yaml/#script
+* https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#define-image-in-the-gitlab-ciyml-file
 
 ### ステージの追加
 ジョブの追加のともない、対応するステージも定義します。 
@@ -99,6 +103,8 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
         mvn-package:
         ...
         ```
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/pipelines/pipeline_architectures.html#basic-pipelines
 
 ### 環境変数の追加
 以上で、最小限のステージ、ジョブの追加は完了します。
@@ -120,6 +126,9 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
         * Maven で使用する各種依存ライブラリの保存先（Maven のローカルリポジトリ）を `$CI_PROJECT_DIR/.m2/repository` として指定することで、CIで扱いやすくします。
             * [`$CI_PROJECT_DIR`](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html) はジョブ内での Git リポジトリをクローンした先のディレクトリです。
         * `-Dcheckstyle.skip=true`：Maven のローカルリポジトリを指定する場合、Maven の checkstyle プラグインの動作時にエラーが発生するため、チェック処理を回避します。（詳細未調査）
+
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/yaml/#variables
 
 ### ソースコードのコミット
 `.gitlab-ci.yml` の内容をブランチへ反映します。

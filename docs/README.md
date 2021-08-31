@@ -11,7 +11,7 @@
 * Invitation Code: ハンズオン環境の事前準備メールで案内
 
 1. アカウント作成URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
-2. 次のページで、GitLab Training Cloudの [GitLab URL]（https://workshop.gitlabtraining.cloud）と [Username] 、[Password] が表示されます。
+2. 次のページで、GitLab Training Cloudの [GitLab URL]（[https://workshop.gitlabtraining.cloud]）と [Username] 、[Password] が表示されます。
 3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
 4. [My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。
 5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）

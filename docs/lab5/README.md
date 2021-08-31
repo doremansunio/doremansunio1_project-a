@@ -44,7 +44,7 @@ graph LR
     end
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |needs:, Artifacts|unit-test(unit-test job)
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
     end
     subgraph "Post build"
         test[Stage] --> post-build[Stage]
@@ -64,16 +64,13 @@ graph LR
         mvn-package(mvn-package job) 
         
     end
-
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |needs:, Artifacts|unit-test(unit-test job)
-         
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
     end
     subgraph "Post build"
         test[Stage] --> post-build[Stage]
         mvn-deploy(mvn-deploy job) 
-        
     end
     subgraph "Release"
         post-build[Stage] --> release[Stage]

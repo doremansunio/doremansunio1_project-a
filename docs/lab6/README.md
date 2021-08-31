@@ -25,7 +25,7 @@ graph LR
     subgraph "Test"
         build[Stage] --> test[Stage]
         download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
-        security-test-jobs((security test jobs))
+                security-test-jobs(Quality, Security, Compliance Test Jobs)
     end
 ```
 

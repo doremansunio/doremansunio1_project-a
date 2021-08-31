@@ -23,10 +23,9 @@ graph LR
         download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
         mvn-package(mvn-package job) 
     end
-
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |needs:, Artifacts|unit-test(unit-test job)
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
     end
 ```
 
@@ -42,7 +41,6 @@ graph LR
         download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
         mvn-package(mvn-package job) 
     end
-
     subgraph "Test"
         build[Stage] --> test[Stage]
         download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)

@@ -11,7 +11,8 @@
 * Invitation Code: ハンズオン環境の事前準備メールで案内
 
 1. アカウント作成URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
-2. 次のページで、GitLab Training Cloudの [GitLab URL]（https://workshop.gitlabtraining.cloud）と [Username] 、[Password] が表示されます。
+2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://workshop.gitlabtraining.cloud`)、
+ [Username] 、[Password] が表示されます。
 3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
 4. [My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。
 5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
@@ -70,6 +71,20 @@ GitLab Training Cloud 用アカウントの作成で追加したブックマー�
 |[Lab6](./lab6)|品質とセキュリティスキャン|約15分|[解答](./lab6/SOLUTION.md)|
 |[Lab7](./lab7)|Web アプリケーションのデプロイ|約15分|[解答](./lab7/SOLUTION.md)|
 |[Lab8](./lab8)|もっと時間が余った方へのおまけ|不明|なし|
+
+# GitLab パイプラインエディタの活用
+[パイプラインエディタ](https://docs.gitlab.com/ee/ci/pipeline_editor/) では、`.gitlab-ci.yml` の構文やLintチェック、生成パイプラインのプレビュー、インクルードした外部 CI テンプレートを展開した結果を確認することができます。`.gitlab-ci.yml` で発生した構文エラーの原因を探るのに役に立ちます。
+
+構文エラーの原因第一位は微妙なインデントのずれです。YAML ファイルはインデントに厳密であるため、注意しましょう。以下のようなインデントのずれは NG です。
+```yaml
+test-job:
+  stage: test
+   image: python:latest
+  script:
+```
+
+プロジェクトの左側のメニューより、[CI/CD] > [Editor] をクリックし、ページ上部のプルダウンメニューで編集、検証対象のブランチを選択します。
+
 
 # [GitLab Training Cloud](https://workshop.gitlabtraning.cloud) 環境情報
 

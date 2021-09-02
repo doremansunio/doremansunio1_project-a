@@ -4,11 +4,31 @@
 [[_TOC_]]
 
 ## 目的
-* 外部の `.gitlab-ci.yml` を自プロジェクトのパイプラインに取り組むための `include` の使い方を学習します。
-* GitLab が提供する `.gitlab-ci.yml` テンプレートを利用することで、[Code Quality](https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html) や [各種セキュリティ](https://docs.gitlab.com/ee/user/application_security/)、[コンプライアンススキャン](https://docs.gitlab.com/ee/user/compliance/license_compliance/index.html)が手軽に開始できることを理解します。
+* 外部の `.gitlab-ci.yml` を自プロジェクトのパイプラインに取り組むためのキーワード `include` の使い方を学習します。
+* GitLab が提供する `.gitlab-ci.yml` テンプレートを利用することで、[Code Quality](https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html) や [各種セキュリティスキャン](https://docs.gitlab.com/ee/user/application_security/)、[コンプライアンススキャン](https://docs.gitlab.com/ee/user/compliance/license_compliance/index.html)が手軽に開始できることを理解します。
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Feature Branches (Merge Requests)
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job)
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+                security-test-jobs(Quality, Security, Compliance Test Jobs)
+    end
+```
+
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Add quality and security test"” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。
@@ -18,17 +38,23 @@ Code Quality、SAST、Secret Detection、依存関係スキャン、ライセン
 
 1. マージリクエストのページで、[Web IDE で開く] をクリックします。
 1. Web IDE の左側のソースコードのツリーから [.gitlab-ci.yml] をクリックし、以下のテンプレートを追記します。
+    * テンプレート
+        ```yaml
+        include:
+        - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
+        - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
+        - template: Security/License-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/License-Scanning.gitlab-ci.yml
+        - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
+        - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
+        ```
 
-* テンプレート
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html
+* https://docs.gitlab.com/ee/user/application_security/sast/index.html
+* https://docs.gitlab.com/ee/user/application_security/dependency_scanning/
+* https://docs.gitlab.com/ee/user/application_security/secret_detection/
+* https://docs.gitlab.com/ee/user/compliance/license_compliance/
 
-```yaml
-include:
-  - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/License-Scanning.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
-```
 
 ### ソースコードのコミット
 [Lab1 の .gitlab-ci.yml のコミット](../lab1/README.md#ソースコードのコミット) を参照して同様に操作します。

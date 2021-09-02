@@ -10,96 +10,160 @@
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Feature Branches (Merge Requests)
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+```
+
+* In Default Branch
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+    subgraph "Post build"
+        test[Stage] --> post-build[Stage]
+        mvn-deploy(mvn-deploy job) 
+    end
+```
+* For Tags
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+        
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+    subgraph "Post build"
+        test[Stage] --> post-build[Stage]
+        mvn-deploy(mvn-deploy job) 
+    end
+    subgraph "Release"
+        post-build[Stage] --> release[Stage]
+        release(release job) 
+        
+    end
+```
+
+
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Add release job” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。
 
-### mvn-deployのジョブの条件変更
-前の Lab で実施したデフォルトブランチの場合にジョブ実行する条件に加え、tag をつけられた際にもジョブ `mvn-deploy` を実行するようします。
+### mvn-deploy のジョブの条件変更
+前の Lab で実施したデフォルトブランチの場合にジョブ実行する条件に加え、Git Tag をつけられた場合にもジョブ `mvn-deploy` を実行するようします。
 
 1. マージリクエストのページで、[Web IDE で開く] をクリックします。
 1. Web IDE の左側のソースコードのツリーから [.gitlab-ci.yml] をクリックし、以下の定義対象の指示とテンプレートにしたがってのジョブ定義を追加します。
+    * 定義対象
+      |対象|値|解説|
+      | :--- | :--- | :--- |
+      |Tag された時にも実行されるようにジョブの **OR 条件**の追加|`$CI_COMMIT_TAG`|コミットに tag がつけられていればタグ名が環境変数にセットされます。|
+    * テンプレート
+      ```yaml
+      mvn-deploy:
+        stage: post build
+        image: maven:3.8.1-openjdk-17-slim
+        before_script:
+          - apt update && apt install git -y
+        script:
+          - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
+        rules:
+          - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' # この行を修正
+      ```
 
-* 定義対象
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/jobs/job_control.html#rules-examples
 
-|対象|値|解説|
-| :--- | :--- | :--- |
-|Tag された時にも実行されるようにジョブの **OR 条件**の追加|`$CI_COMMIT_TAG`|コミットに tag がつけられていればタグ名が環境変数にセットされます。|
-
-* テンプレート
-
-
-```yaml
-mvn-deploy:
-  stage: post build
-  image: maven:3.8.1-openjdk-17-slim
-  before_script:
-    - apt update && apt install git -y
-  script:
-    - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' # この行を修正
-```
-
-### releaseのジョブの追加
+### release のジョブの追加
 `.gitlab-ci.yml` に ジョブ `release` を追加します。
 
 * 定義対象
-
-|対象|値|解説|
-| :--- | :--- | :--- |
-|リリースをするためのジョブキーワード|`release`||
-|アセット（リリース物）へのリンク名|`'spring-petclinic jar'`|ハンズオンで利用している Web アプリの jar を示す表示名を付けます。|
-|Tag された場合のみで実行される条件の設定|（条件文を考えましょう）|-|
-
+  |対象|値|解説|
+  | :--- | :--- | :--- |
+  |リリースをするためのジョブキーワード|`release`||
+  |アセット（リリース物）へのリンク名|`'spring-petclinic jar'`|ハンズオンで利用している Web アプリの jar を示す表示名を付けます。|
+  |Git Tag された場合のみで実行される条件の設定|（条件文を考えましょう）|-|
 * テンプレート
-
-
-```yaml
-release:
-  stage: release
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  script:
-    - echo running release_job for '$CI_COMMIT_TAG'
-  <Code here>:
-    name: 'Release $CI_COMMIT_TAG'
-    description: 'Created using the release-cli for $CI_COMMIT_TAG'
-    tag_name: '$CI_COMMIT_TAG'
-    milestones:
-      - $CI_COMMIT_TAG
-    assets:
-      links:
-        - name: <Code here>
-          url: '$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/maven/org/springframework/samples/spring-petclinic/$CI_COMMIT_TAG/spring-petclinic-$CI_COMMIT_TAG.jar'
-        - name: 'spring-petclinic pom'
-          url: '$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/maven/org/springframework/samples/spring-petclinic/$CI_COMMIT_TAG/spring-petclinic-$CI_COMMIT_TAG.pom'
-  rules:
-    - if: <Code here>
-```
+  ```yaml
+  release:
+    stage: release
+    image: registry.gitlab.com/gitlab-org/release-cli:latest
+    script:
+      - echo running release_job for '$CI_COMMIT_TAG'
+    <Code here>:
+      name: 'Release $CI_COMMIT_TAG'
+      description: 'Created using the release-cli for $CI_COMMIT_TAG'
+      tag_name: '$CI_COMMIT_TAG'
+      milestones:
+        - $CI_COMMIT_TAG
+      assets:
+        links:
+          - name: <Code here>
+            url: '$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/maven/org/springframework/samples/spring-petclinic/$CI_COMMIT_TAG/spring-petclinic-$CI_COMMIT_TAG.jar'
+          - name: 'spring-petclinic pom'
+            url: '$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/maven/org/springframework/samples/spring-petclinic/$CI_COMMIT_TAG/spring-petclinic-$CI_COMMIT_TAG.pom'
+    rules:
+      - if: <Code here>
+  ```
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/yaml/index.html#complete-example-for-release
 
 ### ステージの追加
-テスト済みのソースコードのみをリモートリポジトリへ登録するようにするため、ステージ `test` の後にジョブが実行されるようにします。
+Maven のリモートリポジトリに jar ファイルを登録した後に、リリースのジョブが実行されるようにします。
 1. `stages:` の定義が以下になるように、`release` というステージを `post build` の後に追加します。
-
-```yaml
-stages:
-  - pre build
-  - build
-  - test
-  - post build
-  - release  #この行を追加
-```
+    ```yaml
+    stages:
+      - pre build
+      - build
+      - test
+      - post build
+      - release  #この行を追加
+    ```
 
 ### pom.xml の修正
-元々リモートリポジトリに登録する際の、jar ファイルバージョンはハードコーディングされていましたが、`$CI_COMMIT_REF_NAME` が渡るようにします。`$CI_COMMIT_REF_NAME` は、コミットに Tag があれば Tag 名がセットされ、そうでない場合はブランチ名（main など）がセットされるため、Tag とブランチの両方の場合にも値が入っているため便利です。
-1. 8行目付近を以下のように変更します。
-
-```xml
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.springframework.samples</groupId>
-  <artifactId>spring-petclinic</artifactId>
-  <version>${env.CI_COMMIT_REF_NAME}</version>  <!-- この行を変更 ->
-```
+現状はリモートリポジトリに登録する際のjar ファイルのバージョンは、設定ファイルにハードコーディングされています。ここでは `$CI_COMMIT_REF_NAME` が渡るようにします。`$CI_COMMIT_REF_NAME` は、コミットに Tag があれば Tag 名がセットされ、そうでない場合はブランチ名（main など）がセットされるため、Tag とブランチの両方の場合にも値が入っているため便利です。
+1. `pom.xml` の8行目付近を以下のように変更します。
+  ```xml
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.springframework.samples</groupId>
+    <artifactId>spring-petclinic</artifactId>
+    <version>${env.CI_COMMIT_REF_NAME}</version>  <!-- この行を変更 ->
+  ```
 
 ### ソースコードのコミット
 [Lab1 の .gitlab-ci.yml のコミット](../lab1/README.md#ソースコードのコミット) を参照して同様に操作します。
@@ -113,7 +177,7 @@ stages:
 1. [マイルストーンを作成] ボタンをクリックします。[1.0] のマイルストーンが作成されます。
 
 ### パイプライン実行結果の確認
-変更内容の特性上、フィーチャーブランチ（マージリクエスト）でのパイプラインでは条件の正しさが検証できないため、マージ後のmain ブランチで検証を確認します。
+変更内容の特性上、フィーチャーブランチ（マージリクエスト）でのパイプラインでは条件の正しさが検証できないため、マージ後の main ブランチで検証を確認します。
 1. マージリクエストのパイプラインが成功し、`mvn-deploy` と `release` のジョブ存在しないことを確認します。
 1. [Mark as ready] ボタンをクリックします。
 1. [マージ] ボタンをクリックし、マージリクエストをマージします。

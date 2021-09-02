@@ -10,56 +10,91 @@
 
 
 ## ハンズオンの課題
+### 完成予定のパイプライン
+* In Feature Branches (Merge Requests)
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+```
+
+* In Default Branch
+```mermaid
+graph LR
+    subgraph "Pre build"
+        pre-build[Stage]
+        download-m2cache(download-m2cache job)
+    end
+    subgraph "Build"
+        pre-build[Stage] --> build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        mvn-package(mvn-package job) 
+    end
+    subgraph "Test"
+        build[Stage] --> test[Stage]
+        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+    end
+    subgraph "Post build"
+        test[Stage] --> post-build[Stage]
+        mvn-deploy(mvn-deploy job) 
+    end
+```
 ### イシューとマージリクエストの作成
 イシューのタイトルを “Deploy jar only in main branch” とし、
 [Lab1 のイシューとマージリクエストの作成](../lab1/README.md#イシューとマージリクエストの作成) を参照して同様に操作します。
 
 ### mvn-deployのジョブの条件追加
 デフォルトブランチであるmainブランチの場合のみ、ジョブ `mvn-deploy` を実行するように条件を追加します。
-
 1. マージリクエストのページで、[Web IDE で開く] をクリックします。
 1. Web IDE の左側のソースコードのツリーから [.gitlab-ci.yml] をクリックし、以下の定義対象の指示とテンプレートにしたがってのジョブ定義を追加します。
+    * 定義対象
+      |対象|値|解説|
+      | :--- | :--- | :--- |
+      |条件|`'$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'`|ジョブの実行ブランチがデフォルトブランチ（通常は main）であれば `true` になる条件です。|
+    * テンプレート
+      ```yaml
+      mvn-deploy:
+        stage: post build
+        image: maven:3.8.1-openjdk-17-slim
+        before_script:
+          - apt update && apt install git -y
+        script:
+          - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
+        <Code here>:
+          - <Code here>: <Code here>
+      ```
+    * （スキップ可）周辺の解説
+      * `./mvnw deploy` は Maven でビルドした jar ファイル等を Maven のリモートリポジトリへ登録するためのコマンドです。「デプロイ」よりも「デリバリー」や「リリース」の方が感覚的に違いかもしれません。
+      * Maven Deploy の処理の中で git コマンドが必要なため、git コマンドをインストールしています。
+      * GitLab の Maven 用のパッケージレジストリ（Maven リポジトリ）へアクセスするために、GitLab CI/CD パイプラインのジョブで一時的に発行される [GitLab CI/CD job token](https://docs.gitlab.com/ee/api/index.html#gitlab-cicd-job-token) で認証し、GitLab APIの設定をしてあります。
+        * `ci_settings.xml` に `${env.CI_JOB_TOKEN}` を記載することで、環境変数 `$CI_JOB_TOKEN` を Maven の設定ファイルに渡しています。（[Authenticate with a CI job token in Maven](https://docs.gitlab.com/ee/user/packages/maven_repository/#authenticate-with-a-ci-job-token-in-maven)）
+      * Maven Deploy のエラーを回避するため、`pom.xml` の234行目付近に `<useNativeGit>true</useNativeGit>` を追加しています。
+      * GitLab パッケージレジストリを Maven のリモートリポジトリとして登録するために、Maven リポジトリの設定について、以下のように設定を追記します。298、305行目に、`<repository>` と  `<distributionManagement>` の設定を追加しています。（[Project-level Maven endpoint](https://docs.gitlab.com/ee/user/packages/maven_repository/#project-level-maven-endpoint)）
 
-* 定義対象
-
-|対象|値|解説|
-| :--- | :--- | :--- |
-|条件|`'$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'`|ジョブの実行ブランチがデフォルトブランチ（通常は main）であれば `true` になる条件です。|
-
-
-* テンプレート
-
-
-```yaml
-mvn-deploy:
-  stage: post build
-  image: maven:3.8.1-openjdk-17-slim
-  before_script:
-    - apt update && apt install git -y
-  script:
-    - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
-  <Code here>: #この行を追加し、修正
-    - <Code here>: <Code here> #この行を追加し、修正
-```
-  * （スキップ可）周辺の解説
-    * `./mvnw deploy` は Maven でビルドした jar ファイル等を Maven のリモートリポジトリへ登録するためのコマンドです。「デプロイ」よりも「デリバリー」や「リリース」の方が感覚的に違いかもしれません。
-    * Maven Deploy の処理の中で git コマンドが必要なため、git コマンドをインストールしています。
-    * GitLab の Maven 用のパッケージレジストリ（Maven リポジトリ）へアクセスするために、GitLab CI/CD パイプラインのジョブで一時的に発行される [GitLab CI/CD job token](https://docs.gitlab.com/ee/api/index.html#gitlab-cicd-job-token) で認証し、GitLab APIの設定をしてあります。
-      * `ci_settings.xml` に `${env.CI_JOB_TOKEN}` を記載することで、環境変数 `$CI_JOB_TOKEN` を Maven の設定ファイルに渡しています。（[Authenticate with a CI job token in Maven](https://docs.gitlab.com/ee/user/packages/maven_repository/#authenticate-with-a-ci-job-token-in-maven)）
-    * Maven Deploy のエラーを回避するため、`pom.xml` の234行目付近に `<useNativeGit>true</useNativeGit>` を追加しています。
-    * GitLab パッケージレジストリを Maven のリモートリポジトリとして登録するために、Maven リポジトリの設定について、以下のように設定を追記します。298、305行目に、`<repository>` と  `<distributionManagement>` の設定を追加しています。（[Project-level Maven endpoint](https://docs.gitlab.com/ee/user/packages/maven_repository/#project-level-maven-endpoint)）
+関連 GitLab Docs のページ
+* https://docs.gitlab.com/ee/ci/jobs/job_control.html#rules-examples
 
 ### ステージの追加
 テスト済みのソースコードのみをリモートリポジトリへ登録するようにするため、ステージ `test` の後にジョブ `mvn-deploy` が実行されるようにします。
 1. `stages` の定義が以下になるように、`post build` というステージを `test` の後に追加します。
-
-```yaml
-stages:
-  - pre build
-  - build
-  - test
-  - post build #この行を追加
-```
+    ```yaml
+    stages:
+      - pre build
+      - build
+      - test
+      - post build #この行を追加
+    ```
 
 ### ソースコードのコミット
 [Lab1 の .gitlab-ci.yml のコミット](../lab1/README.md#ソースコードのコミット) を参照して同様に操作します。

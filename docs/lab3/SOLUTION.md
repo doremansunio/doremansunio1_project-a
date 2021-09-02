@@ -37,8 +37,8 @@ unit-test:
     paths:
       - target/surefire-reports/TEST-*.xml
     reports: 
-        junit:
-          - target/surefire-reports/TEST-*.xml
+      junit:
+        - target/surefire-reports/TEST-*.xml
   needs: 
     - download-m2cache
 ```

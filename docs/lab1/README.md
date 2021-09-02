@@ -82,9 +82,9 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
     * テンプレート
         ```yaml
         mvn-package:
-        stage: <Code here>
-        image: <Code here>
-        script:
+          stage: <Code here>
+          image: <Code here>
+          script:
             - <Code here>
         ```
 関連 GitLab Docs のページ
@@ -98,7 +98,7 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
     * テンプレート
         ```yaml
         stages:
-        - <Code here>
+          - <Code here>
 
         mvn-package:
         ...
@@ -112,7 +112,7 @@ GitLab CI/CD パイプラインの定義ファイルである `.gitlab-ci.yml` �
 
     ```yaml
     variables:
-    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
+      MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
 
     stages:
     ...

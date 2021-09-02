@@ -55,8 +55,8 @@ graph LR
           paths:
             - target/surefire-reports/TEST-*.xml
           <Code here>: 
-              <Code here>:
-                - target/surefire-reports/TEST-*.xml
+            <Code here>:
+              - target/surefire-reports/TEST-*.xml
         <Code here>: 
           - <Code here>
       ```

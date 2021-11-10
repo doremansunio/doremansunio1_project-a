@@ -1,23 +1,29 @@
-# Basic CICD Workshop ja のプロジェクトについて
+# Basic CICD Workshop ja for Self-paced Training
+本READMEは、Basic CICD Workshop jaのハンズオンワークショップを Self-paced で実施するための手順を紹介します。
+
+## Basic CICD Workshop ja のプロジェクトについて
 [Spring PetClinic Sample Application](https://github.com/spring-projects/spring-petclinic) を題材に、GitLab CI/CD パイプラインの基礎を学習します。`.gitlab-ci.yml` を導入するところから実施します。
 * 本ハンズオンワークショップは [e7c879e](https://github.com/spring-projects/spring-petclinic/commit/e7c879ed3abe10e446ff103887ad665ca6acf04e) のコミットに対して修正し、動作確認しています。
 
 # GitLab Training Cloud でのハンズオン準備手順（約10分）
-[GitLab Training Cloud](https://workshop.gitlabtraning.cloud) でハンズオンを開始するための手順です。本手順を参照しながらハンズオンを実施することになるため、本手順のページと実施用のページは、ウィンドウを分けて進めることを推奨します。
+[Self-paced 用 GitLab Training Cloud](https://spt.gitlabtraining.cloud) でハンズオンを開始するための手順です。本手順を参照しながらハンズオンを実施することになるため、本手順のページと実施用のページは、ウィンドウを分けて進めることを推奨します。
 
 
-## GitLab Training Cloud用アカウントの作成
+## GitLab Training Cloud 用アカウントの作成
 * アカウント作成URL: https://gitlabdemo.com/invite
-* Invitation Code: ハンズオン環境の事前準備メールで案内
+* Invitation Code: 別途案内
 
 1. アカウント作成URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
-2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://workshop.gitlabtraining.cloud`)、
+2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://spt.gitlabtraining.cloud`)、
  [Username] 、[Password] が表示されます。
 3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
-4. [My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。
-5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
+4. ~~[My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。~~
+4. [Gitlab Dashboard] をクリックし、GitLab Training Cloud のサインインページが表示されます。
+5. ~~GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）~~
+5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、[Welcome to GitLab] のページがが表示されることを確認します。
+6. 左上の [Menu] > [Groups] > [Your groups] をクリックし、自分専用のグループ（My Test Group - `USERNAME`）をクリックします。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
 ### 注意事項
-GitLab Training Cloud のアカウントは、[ワークショップ終了の1〜2日後の間に自動で削除されます](https://about.gitlab.com/handbook/customer-success/demo-systems/#:~:text=Students%20have%20access%20to%20the%20Training%20Cloud%20until%2000%3A00%20UTC%20two%20days%20following%20the%20workshop%20(4%3A00pm%20PT%20on%20the%20day%20after%20the%20workshop).)。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、[GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
+Self-paced 用の GitLab Training Cloud のアカウントは、アカウント作成後に7日後に自動で削除されます]。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、再度アカウントを作成しプロジェクトをインポートするか、[GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
 https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-project)することを推奨します。（Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
 
 
@@ -32,16 +38,16 @@ https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-p
 ### グループ [My Test Group - USERNAME] への移動
 GitLab Training Cloud 用アカウントの作成で追加したブックマークからでも移動可能です。
 1. ブラウザの新規のウィンドウまたはタブで、画面の左上で、 [Menu] > [Groups] > [所属グループ] の順にをクリックします。
-1. [グループ] の画面で、[Training Users] > [Session INVITATION_CODE] の順にクリックでグループのツリーを展開し、 [My Test Group - USERNAME] をクリックします。（INVITATION_CODE、USERNAMEはランダムな英数字です。）
+1. [My Test Group - USERNAME] をクリックします。（INVITATION_CODE、USERNAMEはランダムな英数字です。）
 1. グループ [My Test Group - USERNAME] に遷移できることを確認します。
 
 ### プロジェクトテンプレートを利用した、グループ配下での新規プロジェクトの作成
 1. グループ [My Test Group - USERNAME] へ移動した状態でGitLabプロジェクトを作成します。
 1. [新規プロジェクト] ボタンをクリックします。
-1. [Create new project] ページで、[テンプレートから作成] をクリックします。
-1. [テンプレートから作成] ページで、[インスタンス] タブをクリクします。
-1. [Basic CICD Workshop ja] の [テンプレートを使用] をクリックします。
-1. [プロジェクト名] に "Basic CICD Workshop" を入力し、[プロジェクトを作成] をクリックします。
+1. [Create new project] ページで、[プロジェクトのインポート] をクリックします。
+1. [リポジトリ　URL]をクリックします。
+1. [Git リポジトリ URL] に `https://workshop.gitlabtraining.cloud/sample-project-templates/basic-cicd-workshop-ja.git` を入力します。
+1. [プロジェクトを作成] をクリックします。
 1. しばらく [インポート中です] と表示されたあと、プロジェクトのトップページが表示され、リポジトリのファイル構成を確認できます。
 
 <!---
@@ -86,11 +92,11 @@ test-job:
 プロジェクトの左側のメニューより、[CI/CD] > [Editor] をクリックし、ページ上部のプルダウンメニューで編集、検証対象のブランチを選択します。
 
 
-# [GitLab Training Cloud](https://workshop.gitlabtraning.cloud) 環境情報
+# [Self-paced 用 GitLab Training Cloud](https://spt.gitlabtraining.cloud) 環境情報
 
 ## GitLab バージョン
  * GitLab Enterprise Edition
-    * https://workshop.gitlabtraining.cloud/help
+    * https://spt.gitlabtraining.cloud/help
 
 ## GitLab プラン
 * [Ultimate](https://about.gitlab.com/pricing/ultimate/) (Self-Managed）
@@ -105,5 +111,5 @@ test-job:
 
 ## Kubernetes クラスタ（アプリのデプロイ環境）
 * インスタンスレベルで GitLab インスタンスと連携
-* Base domain：ci.workshop.gitlabtraining.cloud
-* Kubernetes cluster name：workshop-gitlab-ci-cluster
+* Base domain：ci.spt.gitlabtraining.cloud
+* Kubernetes cluster name：spt-gitlab-ci-cluster

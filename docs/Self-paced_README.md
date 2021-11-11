@@ -1,5 +1,6 @@
 # Basic CICD Workshop ja for Self-paced Training
-本READMEは、Basic CICD Workshop jaのハンズオンワークショップを Self-paced で実施するための手順を紹介します。
+[本README](Self-paced_README.md) は、Basic CICD Workshop jaのハンズオンワークショップを Self-paced で実施するための手順を紹介します。
+[ライブ用ワークショップのREADME](README.md) とは開始手順と環境が異なるため、ご注意ください。
 
 ## Basic CICD Workshop ja のプロジェクトについて
 [Spring PetClinic Sample Application](https://github.com/spring-projects/spring-petclinic) を題材に、GitLab CI/CD パイプラインの基礎を学習します。`.gitlab-ci.yml` を導入するところから実施します。
@@ -41,6 +42,11 @@ GitLab Training Cloud 用アカウントの作成で追加したブックマー�
 1. [My Test Group - USERNAME] をクリックします。（INVITATION_CODE、USERNAMEはランダムな英数字です。）
 1. グループ [My Test Group - USERNAME] に遷移できることを確認します。
 
+#### グループ [My Test Group - USERNAME] の設定（Auto DevOpsの無効化）
+ハンズオンでは独自に CI/CD パイプラインを一歩ずつ構築するため、Auto DevOps 機能はグループレベルで無効化します。
+1. [設定] > [CI/CD] > [Auto DevOps] > [このグループ内のすべてのプロジェクトに対してデフォルトの Auto DevOps パイプライン] のチェックを外します。
+2. [変更を保存] をクリックします。
+
 ### プロジェクトテンプレートを利用した、グループ配下での新規プロジェクトの作成
 1. グループ [My Test Group - USERNAME] へ移動した状態でGitLabプロジェクトを作成します。
 1. [新規プロジェクト] ボタンをクリックします。
@@ -50,18 +56,18 @@ GitLab Training Cloud 用アカウントの作成で追加したブックマー�
 1. [プロジェクトを作成] をクリックします。
 1. しばらく [インポート中です] と表示されたあと、プロジェクトのトップページが表示され、リポジトリのファイル構成を確認できます。
 
-<!---
-### プロジェクトの設定
+#### プロジェクトの設定（自己承認の有効化）
 ハンズオン中にマージリクエストの承認ボタンを表示させるため、以下の事前設定を行います。
 
-1. プロジェクト [Basic CICD Workshop] にいる状態で、左側メニューより [設定] > [一般] をブラウザの新規のウィンドウまたはタブで開きます。
 1. プロジェクト [Basic CICD Workshop] にいる状態で、左側メニューより [設定] > [一般] をクリックします。
-1. [全般設定] のページで、[Merge request (MR) approvals] の右側の [展開] ボタンをクリックします。
+1. [全般設定] のページで、[マージリクエスト承認] の右側の [展開] ボタンをクリックします。
 1. [Approval settings] > [Prevent MR approvals by the author.] のチェックを外します。
 1. [変更を保存] をクリックし、設定を保存します。
--->
+
 
 # Lab 一覧
+各Labのページに従って順にハンズオンを進めます。
+以降のハンズオンLabの内容は、上記の**インポートした各自のプロジェクト**で実施し、インポート元のテンプレートプロジェクトである https://workshop.gitlabtraining.cloud/sample-project-templates/basic-cicd-workshop-ja.git では実施しないよう注意ください。
 ## GitLab CI/CD 入門
 |#|内容|所要時間|解答|
 | :--- | :--- | :--- | :--- |

@@ -11,10 +11,10 @@
 
 
 ## GitLab Training Cloud 用アカウントの作成
-* アカウント作成URL: https://gitlabdemo.com/invite
+* アカウント作成 URL: https://gitlabdemo.com/invite
 * Invitation Code: 別途案内
 
-1. アカウント作成URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
+1. アカウント作成 URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
 2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://spt.gitlabtraining.cloud`)、
  [Username] 、[Password] が表示されます。
 3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
@@ -24,8 +24,8 @@
 5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、[Welcome to GitLab] のページがが表示されることを確認します。
 6. 左上の [Menu] > [Groups] > [Your groups] をクリックし、自分専用のグループ（My Test Group - `USERNAME`）をクリックします。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
 ### 注意事項
-Self-paced 用の GitLab Training Cloud のアカウントは、アカウント作成後に7日後に自動で削除されます]。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、再度アカウントを作成しプロジェクトをインポートするか、[GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
-https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-project)することを推奨します。（Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
+Self-paced 用の GitLab Training Cloud のアカウントは、アカウント作成後に7日後に自動で削除されます。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、再度アカウントを作成しプロジェクトをインポートします。または [GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
+https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-project)することを推奨します。（ただし、Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
 
 
 ## ユーザ表示言語の日本語への変更
@@ -56,8 +56,8 @@ GitLab Training Cloud 用アカウントの作成で追加したブックマー�
 1. [プロジェクトを作成] をクリックします。
 1. しばらく [インポート中です] と表示されたあと、プロジェクトのトップページが表示され、リポジトリのファイル構成を確認できます。
 
-#### プロジェクトの設定（自己承認の有効化）
-ハンズオン中にマージリクエストの承認ボタンを表示させるため、以下の事前設定を行います。
+#### プロジェクトの設定（マージリクエスト作成者による承認の有効化）
+ハンズオン中に自身のマージリクエストにおいて承認ボタンを表示させるため、以下の事前設定を行います。
 
 1. プロジェクト [Basic CICD Workshop] にいる状態で、左側メニューより [設定] > [一般] をクリックします。
 1. [全般設定] のページで、[マージリクエスト承認] の右側の [展開] ボタンをクリックします。

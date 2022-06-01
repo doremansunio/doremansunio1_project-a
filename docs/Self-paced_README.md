@@ -18,11 +18,12 @@
 2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://spt.gitlabtraining.cloud`)、
  [Username] 、[Password] が表示されます。
 3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
-4. ~~[My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。~~
 4. [Gitlab Dashboard] をクリックし、GitLab Training Cloud のサインインページが表示されます。
-5. ~~GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）~~
-5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、[Welcome to GitLab] のページがが表示されることを確認します。
-6. 左上の [Menu] > [Groups] > [Your groups] をクリックし、自分専用のグループ（My Test Group - `USERNAME`）をクリックします。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
+5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、[Welcome to GitLab] のページが表示されることを確認します。
+6. [Welcome to GitLab] のページの左上で、 [メニュー] > [グループ] の順にをクリックします。
+7. [あなたのグループを検索] の検索欄に "My Test Group" を入力し、候補として表示された [My Test Group - USERNAME] をクリックします。
+8. グループ [My Test Group - USERNAME] に遷移できることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
+
 ### 注意事項
 Self-paced 用の GitLab Training Cloud のアカウントは、アカウント作成後に7日後に自動で削除されます。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、再度アカウントを作成しプロジェクトをインポートします。または [GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
 https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-project)することを推奨します。（ただし、Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
@@ -38,8 +39,8 @@ https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-p
 ## ハンズオン用プロジェクトのインポート
 ### グループ [My Test Group - USERNAME] への移動
 GitLab Training Cloud 用アカウントの作成で追加したブックマークからでも移動可能です。
-1. ブラウザの新規のウィンドウまたはタブで、画面の左上で、 [Menu] > [Groups] > [所属グループ] の順にをクリックします。
-1. [My Test Group - USERNAME] をクリックします。（INVITATION_CODE、USERNAMEはランダムな英数字です。）
+1. GitLab の任意のページの左上で、 [メニュー] > [グループ] の順にをクリックします。
+1. [あなたのグループを検索] の検索欄に "My Test Group" を入力し、候補として表示された [My Test Group - USERNAME] をクリックします。
 1. グループ [My Test Group - USERNAME] に遷移できることを確認します。
 
 #### グループ [My Test Group - USERNAME] の設定（Auto DevOpsの無効化）

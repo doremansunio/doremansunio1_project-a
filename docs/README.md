@@ -31,8 +31,8 @@ https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-p
 ## ハンズオン用プロジェクトのインポート
 ### グループ [My Test Group - USERNAME] への移動
 GitLab Training Cloud 用アカウントの作成で追加したブックマークからでも移動可能です。
-1. ブラウザの新規のウィンドウまたはタブで、画面の左上で、 [Menu] > [Groups] > [所属グループ] の順にをクリックします。
-1. [グループ] の画面で、[Training Users] > [Session INVITATION_CODE] の順にクリックでグループのツリーを展開し、 [My Test Group - USERNAME] をクリックします。（INVITATION_CODE、USERNAMEはランダムな英数字です。）
+1. GitLab の任意のページの左上で、 [メニュー] > [グループ] の順にをクリックします。
+1. [あなたのグループを検索] の検索欄に "My Test Group" を入力し、候補として表示された [My Test Group - USERNAME] をクリックします。
 1. グループ [My Test Group - USERNAME] に遷移できることを確認します。
 
 ### プロジェクトテンプレートを利用した、グループ配下での新規プロジェクトの作成

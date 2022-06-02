@@ -4,6 +4,7 @@
 ```yaml
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
+  SAST_EXCLUDED_ANALYZERS: "spotbugs"
 
 stages:
   - pre build

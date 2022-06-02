@@ -55,6 +55,15 @@ Code Quality、SAST、Secret Detection、依存関係スキャン、ライセン
 * https://docs.gitlab.com/ee/user/application_security/secret_detection/
 * https://docs.gitlab.com/ee/user/compliance/license_compliance/
 
+### Spotbugsの無効化
+JavaのSASTアナライザーのSpotbugsは実行時間が長いため、無効化にし、Semgrepアナライザーのみを実行するように設定をします。
+
+* 以下のように、`variables:`の下に`SAST_EXCLUDED_ANALYZERS: "spotbugs"`を追記します。
+    ```yaml
+    variables:
+      MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
+      SAST_EXCLUDED_ANALYZERS: "spotbugs" #この行を追加
+    ```
 
 ### ソースコードのコミット
 [Lab1 の .gitlab-ci.yml のコミット](../lab1/README.md#ソースコードのコミット) を参照して同様に操作します。

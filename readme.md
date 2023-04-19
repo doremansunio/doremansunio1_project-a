@@ -1,5 +1,9 @@
-# Spring PetClinic Sample Application [![Build Status](https://travis-ci.org/spring-projects/spring-petclinic.png?branch=main)](https://travis-ci.org/spring-projects/spring-petclinic/)
+# Basic CICD Workshop
+This project is created for GitLab Basic CI/CD Workshop based on [this commit](https://github.com/spring-projects/spring-petclinic/commit/e7c879ed3abe10e446ff103887ad665ca6acf04e) of [Spring PetClinic Sample Application](https://github.com/spring-projects/spring-petclinic).
 
+- [Lab instructions](./labs/ja/README.md) are provided in Japanese only at this time.
+
+# Spring PetClinic Sample Application
 ## Understanding the Spring Petclinic application with a few diagrams
 <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
 

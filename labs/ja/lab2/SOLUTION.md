@@ -4,7 +4,7 @@
 
 ```yaml
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
 stages:
   - pre build
@@ -15,15 +15,15 @@ download-m2cache:
   image: alpine:3.14.1
   script:
     - apk --no-cache add curl
-    - curl -L -o m2.zip "https://workshop.gitlabtraining.cloud/api/v4/projects/sample-project-templates%2flocal-cache-for-basic-cicd-workshop/jobs/artifacts/main/download?job=mvn-package"
+    - 'curl -o $CI_PROJECT_DIR/m2.zip "https://gitlab.com/api/v4/projects/45304220/packages/generic/m2_local_cache/latest/m2.zip"'
     - if [ -e ./m2.zip ]; then unzip m2.zip; fi
   artifacts:
     paths:
-      - ./.m2/
+      - $CI_PROJECT_DIR/.m2/
 
 mvn-package:
   stage: build
-  image: maven:3.8.1-openjdk-17-slim
+  image: maven:3.8.6-openjdk-8-slim
   script:
     - ./mvnw package -Dmaven.test.skip=true
 ```

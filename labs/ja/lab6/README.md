@@ -19,12 +19,12 @@ graph LR
     end
     subgraph "Build"
         pre-build[Stage] --> build[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Job Artifact|build[Stage]
         mvn-package(mvn-package job)
     end
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+        download-m2cache(download-m2cache job) -.-> |Job Artifact by 'needs:'|unit-test(unit-test job)
                 security-test-jobs(Quality, Security, Compliance Test Jobs)
     end
 ```

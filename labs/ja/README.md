@@ -1,64 +1,70 @@
-# Basic CICD Workshop ja のプロジェクトについて
+# Basic CICD Workshopのプロジェクトについて
 [Spring PetClinic Sample Application](https://github.com/spring-projects/spring-petclinic) を題材に、GitLab CI/CD パイプラインの基礎を学習します。`.gitlab-ci.yml` を導入するところから実施します。
 * 本ハンズオンワークショップは [e7c879e](https://github.com/spring-projects/spring-petclinic/commit/e7c879ed3abe10e446ff103887ad665ca6acf04e) のコミットに対して修正し、動作確認しています。
 
-# GitLab Training Cloud でのハンズオン準備手順（約10分）
-[GitLab Training Cloud](https://workshop.gitlabtraining.cloud/) でハンズオンを開始するための手順です。本手順を参照しながらハンズオンを実施することになるため、本手順のページと実施用のページは、ウィンドウを分けて進めることを推奨します。
+# GitLab.com でのハンズオン準備手順（約10分）
+[GitLab.com](https://gitlab.com/explore) でハンズオンを開始するための手順です。本手順を参照しながらハンズオンを実施することになるため、本手順のページと実施用のページは、ウィンドウを分けて進めることを推奨します。
 
+## GitLab.comアカウントの作成
 
-## GitLab Training Cloud 用アカウントの作成
+会社メールのGitLab.comアカウントを持っていない方は https://gitlab.com/users/sign_up より会社メールを利用し、アカウントを作成します。アカウントを持っている方は、本セクションをスキップしてください。
+* アカウント作成URL: https://gitlab.com/users/sign_up
+
+## ハンズオン用グループへの参加
+**自身のGitLab環境で実施する場合は、本セクションをスキップしてください。**
 * アカウント作成 URL: https://gitlabdemo.com/invite
 * Invitation Code: ハンズオン環境の事前準備メールで案内
 
-1. アカウント作成 URLで [Invitation Code] を入力し、[Redeem and Create Account] をクリックします。
-2. 次のページで、GitLab Training Cloudの [GitLab URL] (`https://workshop.gitlabtraining.cloud`)、
- [Username] 、[Password] が表示されます。
-3. [Download Credentials] をクリックし、認証情報を保存し、再度 GitLab Training Cloud へサインインが必要な場合に利用します。
-4. [My Group] をクリックし、GitLab Training Cloud のサインインページが表示されます。
-5. GitLab Training Cloud のサインインページで、2. の [Username] 、[Password] を入力し、GitLab Training Cloud の自分専用のグループ（My Test Group - `USERNAME`）が表示されることを確認します。(このページを以後の作業やワークショップ当日のためにブックマークしておきます。`USERNAME` はランダムな英数字です。）
+ハンズオンは以下で示すアカウントごとに発行されるGitLab.com上のグループで行います。このグループの作成方法を紹介します。
+* `https://gitlab.com/gitlab-learn-labs/environments/session-[SESSION_ID]/[RANDOM_CODE]` （例：`https://gitlab.com/gitlab-learn-labs/environments/session-26828cef/iu1x0th0`）
+
+1. ハンズオン用グループへ招待するためのサイト、 https://gitlabdemo.com/invite へアクセスします。
+
+2. [Invitation Code] に、GitLab社から連携されるInvitation Codeを入力し、[Provision Tranining Enviroment] をクリックします。
+3. [GitLab.com Username] の入力項目が表示されるため、アカウント作成時に決めたUsernameを入力し、再度 [Provision Tranining Enviroment] をクリックします。
+
+4. [Your GitLab Credentials] のページが表示されたら、自動的にハンズオン用のグループがGitLab.com上に作成されています。[GitLab URL] のURLをクリックし、作成されたグループへ移動します。
+
+5. [My Test Group - …] のページが表示されたら、作成したグループへのアクセスは成功しています。ワークショップ当日にスムーズに本グループへ移動できるよう、本URLをブックマークしておくことを推奨します。  
+
 ### 注意事項
-GitLab Training Cloud のアカウントは、[ワークショップ終了の1〜2日後の間に自動で削除されます](https://about.gitlab.com/handbook/customer-success/demo-systems/#:~:text=Students%20have%20access%20to%20the%20Training%20Cloud%20until%2000%3A00%20UTC%20two%20days%20following%20the%20workshop%20(4%3A00pm%20PT%20on%20the%20day%20after%20the%20workshop).)。それ以降もハンズオンの演習を進めたい方は、一度ハンズオン用の GitLab プロジェクトを[エクスポート](https://docs.gitlab.com/ee/user/project/settings/import_export.html#export-a-project-and-its-data)し、[GitLab.com](https://gitlab.com/) 等に該当プロジェクトを[インポート](
-https://docs.gitlab.com/ee/user/project/settings/import_export.html#import-the-project)することを推奨します。（ただし、Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
-
-
-## ユーザ表示言語の日本語への変更
-英語 UI のままで問題は動作上はありませんが、Lab の手順は日本語 UI を前提としています。
-1. サインイン後のページの右上のユーザのアイコンをクリックし、[Preferences] をクリックします。
-2. [Localization] > [Language] で [Japanese - 日本語] を選択し、[Save Changes] ボタンをクリックします。
-3. ブラウザのページを更新し、表示言語が日本語に変更されることを確認します。
-
+本ハンズオン用グループはハンズオン実施翌日に自動的に削除されるため、必要があればハンズオン実施後にグループやプロジェクトをエクスポート、または自身が管理するGitLab.comグループに移動しておくことを推奨します。
+（ただし、Lab7、Lab9 の一部は Ultimate プランが必要です。Lab8 は Kubernetes クラスタとの連携が必要です。）
 
 ## ハンズオン用プロジェクトのインポート
-### グループ [My Test Group - USERNAME] への移動
-GitLab Training Cloud 用アカウントの作成で追加したブックマークからでも移動可能です。
-1. GitLab の任意のページの左上で、 [メニュー] > [グループ] の順にをクリックします。
-1. [あなたのグループを検索] の検索欄に "My Test Group" を入力し、候補として表示された [My Test Group - USERNAME] をクリックします。
-1. グループ [My Test Group - USERNAME] に遷移できることを確認します。
+### ハンズオン用グループへの移動
+これからの操作は、[My Test Group - …] のグループで行うため、事前準備で保存したブックマークからグループへ移動します。
+
+ブックマークが見当たらない方は、以下の方法で辿るのが早いです。
+1. 左上の三本線のアイコンをクリックします。
+2. [Groups] をクリックします。
+3. 検索欄に `my test` と入力します。
+4. 表示される [My Test Group - …] をクリックします。
 
 ### プロジェクトテンプレートを利用した、グループ配下での新規プロジェクトの作成
-1. グループ [My Test Group - USERNAME] へ移動した状態でGitLabプロジェクトを作成します。
-1. [新規プロジェクト] ボタンをクリックします。
-1. [Create new project] ページで、[テンプレートから作成] をクリックします。
-1. [テンプレートから作成] ページで、[インスタンス] タブをクリクします。
-1. [Basic CICD Workshop ja] の [テンプレートを使用] をクリックします。
-1. [プロジェクト名] に "Basic CICD Workshop" を入力し、[プロジェクトを作成] をクリックします。
-1. しばらく [インポート中です] と表示されたあと、プロジェクトのトップページが表示され、リポジトリのファイル構成を確認できます。
+1. グループ [My Test Group - …] のページにて、[New project] のボタンをクリックします。
+1. [Import project] をクリックします。
+1. [Repository by URL] をクリックします。
+1. プロジェクトインポートのページで [Git repository URL] に `https://gitlab.com/gitlab-learn-labs/sample-projects/basic-cicd-workshop/basic-cicd-workshop.git` を 入力します。
+1. ページ下方の [Create project] のボタンをクリックします。
+1. 作成されたプロジェクトのブックマージを保存します。
 
-<!---
+
+
 ### プロジェクトの設定
-ハンズオン中にマージリクエストの承認ボタンを表示させるため、以下の事前設定を行います。
 
-1. プロジェクト [Basic CICD Workshop] にいる状態で、左側メニューより [設定] > [一般] をクリックします。
-1. [全般設定] のページで、[Merge request (MR) approvals] の右側の [展開] ボタンをクリックします。
-1. [Approval settings] > [Prevent MR approvals by the author.] のチェックを外します。
-1. [変更を保存] をクリックし、設定を保存します。
--->
+ハンズオンの中盤でマージリクエストの承認を体験するため、マージリクエスト作成者が承認できる設定に変更します。
+
+1. プロジェクト [Basic CICD Workshop] にて、左サイドバー [Settings] > [Merge request] をクリックします。
+1. Merge requestsの設定ページの下方で、[Approval settings] > [Prevent approval by author] のチェックを外します。
+1. ボタン [Save changes] をクリックします。
+
 
 # Lab 一覧
 各Labのページに従って順にハンズオンを進めます。
-以降のハンズオンLabの内容は、上記の**インポートした各自のプロジェクト**で実施し、インポート元のテンプレートプロジェクトである https://workshop.gitlabtraining.cloud/sample-project-templates/basic-cicd-workshop-ja.git では実施しないよう注意ください。
+以降のハンズオンLabの内容は、上記の**インポートした各自のプロジェクト**で実施し、インポート元のテンプレートプロジェクトである https://gitlab.com/gitlab-learn-labs/sample-projects/basic-cicd-workshop/basic-cicd-workshop.git では実施しないよう注意ください。
 
-## GitLab CI/CD 入門
+## GitLab CI/CD 基礎
 |#|内容|所要時間|解答|
 | :--- | :--- | :--- | :--- |
 |[Lab1](./lab1)|.gitlab-ci.yml とビルドジョブの追加|約30分|[解答](./lab1/SOLUTION.md)|
@@ -88,24 +94,14 @@ test-job:
 プロジェクトの左側のメニューより、[CI/CD] > [Editor] をクリックし、ページ上部のプルダウンメニューで編集、検証対象のブランチを選択します。
 
 
-# [GitLab Training Cloud](https://workshop.gitlabtraining.cloud/) 環境情報
+# [GitLab Learn Labs](https://gitlab.com/gitlab-learn-labs) 環境情報
 
 ## GitLab バージョン
  * GitLab Enterprise Edition
-    * https://workshop.gitlabtraining.cloud/help
+    * https://gitlab.com/help
 
 ## GitLab プラン
 * [Ultimate](https://about.gitlab.com/pricing/ultimate/) (Self-Managed）
     * 高度なセキュリティテスト、コンプライアンスを備えたDevSecOpsのプロセスのサポート
     * ポートフォリオ管理
-
-## GitLab Runner
-* インスタンスレベルで共有
-* Executor のタイプ：[Docker Machine executor](https://docs.gitlab.com/runner/executors/#docker-machine-executor) 
-    * オートスケールされた Docker エンジン上でジョブが実行されます。
-
-
-## Kubernetes クラスタ（アプリのデプロイ環境）
-* インスタンスレベルで GitLab インスタンスと連携
-* Base domain：ci.workshop.gitlabtraining.cloud
-* Kubernetes cluster name：workshop-gitlab-ci-cluster
+    * Value Stream管理

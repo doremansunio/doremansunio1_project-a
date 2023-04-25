@@ -20,13 +20,13 @@ graph LR
     end
     subgraph "Build"
         pre-build[Stage] --> build[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Job Artifact|build[Stage]
         mvn-package(mvn-package job) 
     end
 
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+        download-m2cache(download-m2cache job) -.-> |Job Artifact by 'needs:'|unit-test(unit-test job)
     end
 ```
 
@@ -39,12 +39,12 @@ graph LR
     end
     subgraph "Build"
         pre-build[Stage] --> build[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts|build[Stage]
+        download-m2cache(download-m2cache job) -.-> |Job Artifact|build[Stage]
         mvn-package(mvn-package job) 
     end
     subgraph "Test"
         build[Stage] --> test[Stage]
-        download-m2cache(download-m2cache job) -.-> |Artifacts by 'needs:'|unit-test(unit-test job)
+        download-m2cache(download-m2cache job) -.-> |Job Artifact by 'needs:'|unit-test(unit-test job)
     end
     subgraph "Post build"
         test[Stage] --> post-build[Stage]
@@ -97,7 +97,7 @@ graph LR
       ```yaml
       mvn-deploy:
         stage: post build
-        image: maven:3.8.1-openjdk-17-slim
+        image: maven:3.8.6-openjdk-8-slim
         before_script:
           - apt update && apt install git -y
         script:

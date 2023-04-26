@@ -3,8 +3,7 @@
 
 ```yaml
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dcheckstyle.skip=true"
-  SAST_EXCLUDED_ANALYZERS: "spotbugs"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
   ROLLOUT_RESOURCE_TYPE: deployment
 
 stages:
@@ -20,16 +19,16 @@ download-m2cache:
   stage: pre build
   image: alpine:3.14.1
   script:
-   - apk --no-cache add curl
-   - curl -L -o m2.zip "https://workshop.gitlabtraining.cloud/api/v4/projects/sample-project-templates%2flocal-cache-for-basic-cicd-workshop/jobs/artifacts/main/download?job=mvn-package"
-   - if [ -e ./m2.zip ]; then unzip m2.zip; fi
+    - apk --no-cache add curl
+    - 'curl -o $CI_PROJECT_DIR/m2.zip "https://gitlab.com/api/v4/projects/45304220/packages/generic/m2_local_cache/latest/m2.zip"'
+    - if [ -e ./m2.zip ]; then unzip m2.zip; fi
   artifacts:
     paths:
-      - ./.m2/
+      - $CI_PROJECT_DIR/.m2/
 
 mvn-package:
   stage: build
-  image: maven:3.8.1-openjdk-17-slim
+  image: maven:3.8.6-openjdk-8-slim
   script:
    - ./mvnw package -Dmaven.test.skip=true
   artifacts:
@@ -38,7 +37,7 @@ mvn-package:
 
 unit-test:
   stage: test
-  image: maven:3.8.1-openjdk-17-slim
+  image: maven:3.8.6-openjdk-8-slim
   script:
     - ./mvnw test
   artifacts:
@@ -53,7 +52,7 @@ unit-test:
 
 mvn-deploy:
   stage: post build
-  image: maven:3.8.1-openjdk-17-slim
+  image: maven:3.8.6-openjdk-8-slim
   before_script:
     - apt update && apt install git -y
   script:
@@ -150,14 +149,13 @@ stop-deploy:
 include:
   - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/License-Scanning.gitlab-ci.yml
   - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
 ```
 
 ## Dockerfile
 ```Dockerfile
-FROM maven:3.8.1-openjdk-17-slim
+FROM maven:3.8.6-openjdk-8-slim
 
 WORKDIR /usr/src/app
 COPY target/*.jar /usr/src/app/

@@ -1,4 +1,5 @@
 # Lab7 - Web アプリケーションのデプロイ
+**本Labを実施するには、Kubernetesクラスタの用意と、[GitLab agent for Kubernetes](https://docs.gitlab.com/ee/user/clusters/agent/) を利用した [GitLab CI/CD workflow](https://docs.gitlab.com/ee/user/clusters/agent/ci_cd_workflow.html) のためセットアップが必要です。セットアップができていない場合は、Labの実施をスキップしてください。**
 ## 目次
 [[_TOC_]]
 
@@ -136,7 +137,7 @@ jar ファイルを後のステージに受け渡すことにより、ジョブ 
   ```yaml
   mvn-package:
     stage: build
-    image: maven:3.8.1-openjdk-17-slim
+    image: maven:3.8.6-openjdk-8-slim
     script:
       - ./mvnw package -Dmaven.test.skip=true  
     artifacts:          # この行を追加

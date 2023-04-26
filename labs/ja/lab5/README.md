@@ -11,7 +11,7 @@
 
 ## ハンズオンの課題
 ### 完成予定のパイプライン
-* In Feature Branches (Merge Requests)
+* Pipeline in feature branches (Merge Requests)
 ```mermaid
 graph LR
     subgraph "Pre build"
@@ -30,7 +30,7 @@ graph LR
     end
 ```
 
-* In Default Branch
+* Pipeline in the default branch
 ```mermaid
 graph LR
     subgraph "Pre build"
@@ -51,7 +51,7 @@ graph LR
         mvn-deploy(mvn-deploy job) 
     end
 ```
-* For Tags
+* Pipeline or tags
 ```mermaid
 graph LR
     subgraph "Pre build"
@@ -87,8 +87,8 @@ graph LR
 ### mvn-deploy のジョブの条件変更
 前の Lab で実施したデフォルトブランチの場合にジョブ実行する条件に加え、Git Tag をつけられた場合にもジョブ `mvn-deploy` を実行するようします。
 
-1. マージリクエストのページで、[Web IDE で開く] をクリックします。
-1. Web IDE の左側のソースコードのツリーから [.gitlab-ci.yml] をクリックし、以下の定義対象の指示とテンプレートにしたがってのジョブ定義を追加します。
+1. マージリクエストのページで、 [Code] > [Open in Web IDE] をクリックし、Web IDE のページを開きます。
+1. Web IDE の左側のソースコードのツリーから [.gitlab-ci.yml] をクリックし、以下の定義対象の内容とテンプレートにしたがってのジョブ定義を追加します。
     * 定義対象
       |対象|値|解説|
       | :--- | :--- | :--- |
@@ -103,7 +103,7 @@ graph LR
         script:
           - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
         rules:
-          - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' # この行を修正
+          - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' # Change this line
       ```
 
 関連 GitLab Docs のページ
@@ -152,7 +152,7 @@ Maven のリモートリポジトリに jar ファイルを登録した後に、
       - build
       - test
       - post build
-      - release  #この行を追加
+      - release  #Add this line
     ```
 
 ### pom.xml の修正
@@ -162,7 +162,7 @@ Maven のリモートリポジトリに jar ファイルを登録した後に、
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-petclinic</artifactId>
-    <version>${env.CI_COMMIT_REF_NAME}</version>  <!-- この行を変更 ->
+    <version>${env.CI_COMMIT_REF_NAME}</version>  <!-- Change this line ->
   ```
 
 ### ソースコードのコミット
@@ -170,23 +170,24 @@ Maven のリモートリポジトリに jar ファイルを登録した後に、
 
 ### マイルストーンの作成
 リリースにマイルストーンを関連付けるために、事前に Tag 名と一致するマイルストーンを作成します。ここでは省略しますが、実際にはマイルストーンにイシューを関連付けさせて、イシュー、マイルストーン、リリース間のトレーサビリティを確保します。
-1. 左側メニューの [イシュー] > [マイルストーン] をクリックします。
-1. [新しいマイルストーン] ボタンをクリックします。
-1. [タイトル] に "1.0" と入力します。
+1. 左側メニューの [Issues] > [Milestones] をクリックします。
+1. [New milestone] のボタンをクリックします。
+1. [Title] に "1.0" と入力します。
 1. [Start Date] と [Due Date] は任意の日付を入力します。
-1. [マイルストーンを作成] ボタンをクリックします。[1.0] のマイルストーンが作成されます。
+1. [Create milestone] ボタンをクリックします。[1.0] のマイルストーンが作成されます。
 
 ### パイプライン実行結果の確認
 変更内容の特性上、フィーチャーブランチ（マージリクエスト）でのパイプラインでは条件の正しさが検証できないため、マージ後の main ブランチで検証を確認します。
 1. マージリクエストのパイプラインが成功し、`mvn-deploy` と `release` のジョブ存在しないことを確認します。
 1. [Mark as ready] ボタンをクリックします。
-1. [マージ] ボタンをクリックし、マージリクエストをマージします。
-1. 左側メニューの [リポジトリ] > [タグ] をクリックします。
-1. [タグ一覧] のページで、[新しいタグ] ボタンをクリックします。
-1. [Tag name]に "1.0" と入力し、[Create from] が "main" になっていることを確認し、[タグ作成] ボタンをクリックします。
-1. 左側メニューの [CI/CD] > [パイプライン] をクリックします。
+1. [Merge] のボタンをクリックし、マージリクエストをマージします。
+1. 左側メニューの [Repository] > [Tags] をクリックします。
+1. [Tags] のページで、[New tag] のボタンをクリックします。
+1. [Tag name]に "1.0" と入力し、[Create from] が "main" になっていることを確認し、[Create tag] のボタンをクリックします。
+1. 左側メニューの [CI/CD] > [Pipelines] をクリックします。
 1. パイプライン一覧の最上部のパイプラインを確認します。
-    * [コミット] の列に、"1.0" のTag名が付けられていることを確認します。
+    * パイプラインのステージが５つあることを確認します。
+    * [Pipeline] の列に、"1.0" のTag名が付けられていることを確認します。
     * [#] から開始するパイプラインの番号のリンクをクリックし、`mvn-deploy` と `release` のジョブが実行されることを確認します。
 1. パイプラインが完了したら、左側メニューの [Deployments] > [Release] をクリックし、CI ジョブにより作成されたリリースを確認します。
     * マイルストーン名

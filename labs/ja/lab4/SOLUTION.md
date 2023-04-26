@@ -46,8 +46,6 @@ unit-test:
 mvn-deploy:
   stage: post build
   image: maven:3.8.6-openjdk-8-slim
-  before_script:
-    - apt update && apt install git -y
   script:
     - ./mvnw deploy -s ci_settings.xml -Dmaven.test.skip=true
   rules:

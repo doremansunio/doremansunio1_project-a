@@ -99,7 +99,7 @@ graph LR
 変更内容の特性上、フィーチャーブランチ（マージリクエスト）でのパイプラインでは条件の正しさが完全に検証できないため、`mvn-deploy` のジョブが存在しないことを確認したらマージリクエストをマージします。
 1. マージリクエストのパイプラインに `mvn-deploy` のジョブが存在しないことを確認します。
 1. [Mark as ready] のボタンをクリックします。
-1. [Merge when pipeline succeeds] の右の矢印 :arrow_down_small: から [Merge immediately] ボタンを選択し、クリックします。
+1. [Merge when pipeline succeeds] の右の矢印 :arrow_down_small: から [Merge immediately] のボタンを選択し、クリックします。
 1. main ブランチ側のパイプラインには `mvn-deploy` のジョブが存在することを確認できたら、正しく定義できています。
 1. main ブランチ側のパイプラインが完了したら、左側メニューの [Packages and registries] > [Package Registry] をクリックします。
 1. パッケージレジストリのページで、[org/springframework/samples/spring-petclinic] (2.4.5) が Maven リポジトリのビルドパッケージとして登録されていることを確認し、タイトルをクリックします。 
@@ -108,6 +108,3 @@ graph LR
 
 # ハンズオンの解答
 * [Lab4 解答](../lab4/SOLUTION.md)
-
-
-

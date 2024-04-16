@@ -45,18 +45,22 @@ Code Quality、依存関係スキャン、ライセンススキャン（依存�
     * テンプレート
         ```yaml
         include:
-        - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
-        - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
-        - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
-        - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
+          - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
+          - template: Security/Dependency-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Dependency-Scanning.gitlab-ci.yml
+          - template: Security/SAST.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/SAST.gitlab-ci.yml
+          - template: Security/SAST-IaC.gitlab-ci.yml # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Security/SAST-IaC.gitlab-ci.yml
+          - template: Security/Secret-Detection.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Secret-Detection.gitlab-ci.yml
+        #  - template: Security/Container-Scanning.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Security/Container-Scanning.gitlab-ci.yml
         ```
 
 関連 GitLab Docs のページ
-* https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html
-* https://docs.gitlab.com/ee/user/application_security/sast/index.html
+* https://docs.gitlab.com/ee/ci/testing/code_quality.html
 * https://docs.gitlab.com/ee/user/application_security/dependency_scanning/
+* https://docs.gitlab.com/ee/user/application_security/sast/index.html
+* https://docs.gitlab.com/ee/user/application_security/iac_scanning/
 * https://docs.gitlab.com/ee/user/application_security/secret_detection/
 * https://docs.gitlab.com/ee/user/compliance/license_scanning_of_cyclonedx_files/index.html
+* https://docs.gitlab.com/ee/user/application_security/container_scanning/
 
 ### ソースコードのコミット
 [Lab1 の .gitlab-ci.yml のコミット](../lab1/README.md#ソースコードのコミット) を参照して同様に操作します。

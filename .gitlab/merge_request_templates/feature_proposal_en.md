@@ -1,50 +1,50 @@
-# このMRの対応内容とその理由
+# What does this MR do and why?
 
 <!--
-マージリクエストでどのような修正をするのかと、その理由を詳しく説明する。
-レビュアーがマージリクエストの意図を理解できるように、議論が行われるたびにこの説明を更新する。
+Describe in detail what your merge request does and why.
+
+Please keep this description updated with any discussion that takes place so
+that reviewers can understand your intent. Keeping the description updated is
+especially important if they didn't participate in the discussion.
 -->
 
+%{first_multiline_commit}
 
-# スクリーンショットまたビデオ録画
+# Screenshots or screen recordings
 
-（UIの変更にはスクリーンショットの添付を必須とし、それ以外の場合にも添付を推奨する。）
-
+_Screenshots are required for UI changes, and strongly recommended for all other merge requests._
 
 <!--
-レビューや将来の参照メンバーの助けとなるような、関連するスクリーンショットやスクリーン録画があれば添付すること。
+Please include any relevant screenshots or screen recordings that will assist
+reviewers and future readers. If you need help visually verifying the change,
+please leave a comment and ping a GitLab reviewer, maintainer, or MR coach.
 -->
 
 | Before | After  |
 | ------ | ------ |
 |        |        |
 
-# ローカルでの設定と検証方法
-（変更のセットアップと検証には、番号付きの手順を推奨する。）
+# How to set up and validate locally
+
+_Numbered steps to set up and validate the change are strongly suggested._
 
 <!--
-（例）
+Example below:
 
-1. rails コンソールで実験を有効にします。
-   ``ruby
+1. In rails console enable the experiment fully
+   ```ruby
    Feature.enable(:member_areas_of_focus)
    ```
-1. http://127.0.0.1:3000/groups/flightjs/-/group_members`を例とするグループやプロジェクトのメンバーページにアクセスします。
-1. メンバーを招待する`ボタンをクリックします。
+1. Visit any group or project member pages such as `http://127.0.0.1:3000/groups/flightjs/-/group_members`
+1. Click the `invite members` button.
 -->
 
-# MR受け入れのチェックリスト
+# MR acceptance checklist
 
-## コードについて
-  - [ ] コードレビューを受けている
-  - [ ] GitLab CI による Security Scan で High レベル以上の脆弱性が検知されていない
-  - [ ] テストケースのレビューを受けている
-  - [ ] 単体テストが全てテストコードとして記載されている
-  - [ ] CI環境で全ての単体テストをパスしている
-  
-## 下記のドキュメントに変更を反映した
-  - [ ] 画面一覧
-  - [ ] テーブル一覧
-  - [ ] WebAPI一覧
+This checklist encourages us to confirm any changes have been analyzed to reduce risks in quality, performance, reliability, security, and maintainability.
+
+* [ ] I have evaluated the [MR acceptance checklist](https://docs.gitlab.com/ee/development/code_review.html#acceptance-checklist) for this MR.
+
+<!-- template sourced from https://gitlab.com/gitlab-org/gitlab/-/blob/master/.gitlab/merge_request_templates/Default.md -->
 
 /assign me

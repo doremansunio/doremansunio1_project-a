@@ -11,7 +11,7 @@
 
 ## ハンズオンの課題
 ### 完成予定のパイプライン
-* In Default Branch
+* Pipelines on the default branch
 ```mermaid
 graph LR
     subgraph "Pre build"

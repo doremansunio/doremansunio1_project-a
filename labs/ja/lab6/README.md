@@ -11,7 +11,7 @@
 
 ## ハンズオンの課題
 ### 完成予定のパイプライン
-* Pipeline in feature branches (Merge Requests)
+* Pipelines on feature branches (Merge Requests)
 ```mermaid
 graph LR
     subgraph "Pre build"
